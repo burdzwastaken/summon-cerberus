@@ -1,46 +1,46 @@
 package main
 
 import (
-	"os"
-	"fmt"
-	"log"
-	"time"
 	"bytes"
-	"regexp"
-	"strings"
-	"net/http"
-	"io/ioutil"
-	"encoding/json"
 	"encoding/base64"
-	"github.com/tidwall/gjson"
+	"encoding/json"
+	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/kms"
+	"github.com/tidwall/gjson"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+	"regexp"
+	"strings"
+	"time"
 )
 
 type EC2IAMinfo struct {
-	Code string `json:"Code"`
-	LastUpdated time.Time `json:"LastUpdated"`
-	InstanceProfileArn string `json:"InstanceProfileArn"`
-	InstanceProfileID string `json:"InstanceProfileId"`
+	Code               string    `json:"Code"`
+	LastUpdated        time.Time `json:"LastUpdated"`
+	InstanceProfileArn string    `json:"InstanceProfileArn"`
+	InstanceProfileID  string    `json:"InstanceProfileId"`
 }
 
 type EC2InstanceIdentityDocument struct {
-	DevpayProductCodes []string `json:"devpayProductCodes"`
-	AvailabilityZone string `json:"availabilityZone"`
-	PrivateIP string `json:"privateIp"`
-	Version string `json:"version"`
-	Region string `json:"region"`
-	InstanceID string `json:"instanceId"`
-	BillingProducts []string `json:"billingProducts"`
-	InstanceType string `json:"instanceType"`
-	AccountID string `json:"accountId"`
-	PendingTime time.Time `json:"pendingTime"`
-	ImageID string `json:"imageId"`
-	KernelID string `json:"kernelId"`
-	RamdiskID string `json:"ramdiskId"`
-	Architecture string `json:"architecture"`
+	DevpayProductCodes []string  `json:"devpayProductCodes"`
+	AvailabilityZone   string    `json:"availabilityZone"`
+	PrivateIP          string    `json:"privateIp"`
+	Version            string    `json:"version"`
+	Region             string    `json:"region"`
+	InstanceID         string    `json:"instanceId"`
+	BillingProducts    []string  `json:"billingProducts"`
+	InstanceType       string    `json:"instanceType"`
+	AccountID          string    `json:"accountId"`
+	PendingTime        time.Time `json:"pendingTime"`
+	ImageID            string    `json:"imageId"`
+	KernelID           string    `json:"kernelId"`
+	RamdiskID          string    `json:"ramdiskId"`
+	Architecture       string    `json:"architecture"`
 }
 
 type AuthDataResponse struct {
@@ -48,15 +48,15 @@ type AuthDataResponse struct {
 }
 
 type CerberusResponse struct {
-	ClientToken string `json:"client_token"`
-	Policies []string `json:"policies"`
-	Metadata struct {
-		AwsAccountID string `json:"aws_account_id"`
+	ClientToken string   `json:"client_token"`
+	Policies    []string `json:"policies"`
+	Metadata    struct {
+		AwsAccountID   string `json:"aws_account_id"`
 		AwsIamRoleName string `json:"aws_iam_role_name"`
-		AwsRegion string `json:"aws_region"`
+		AwsRegion      string `json:"aws_region"`
 	} `json:"metadata"`
-	LeaseDuration int `json:"lease_duration"`
-	Renewable bool `json:"renewable"`
+	LeaseDuration int  `json:"lease_duration"`
+	Renewable     bool `json:"renewable"`
 }
 
 func getAWSRegion() string {
@@ -120,7 +120,7 @@ func getAccountID() string {
 	// Extract the only value from the array - Only one accountID
 	accountID := re.FindAllString(arn, -1)[0]
 	// Return the accountID
-	  return accountID
+	return accountID
 }
 
 func getIAMRole() string {
@@ -284,7 +284,7 @@ func main() {
 		printAndExit(err.Error())
 	}
 
-	secrets := gjson.Get(string(body), "data" + secret)
+	secrets := gjson.Get(string(body), "data"+secret)
 
 	fmt.Print(secrets)
 
