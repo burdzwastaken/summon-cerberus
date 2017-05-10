@@ -8,6 +8,11 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a ch
 - README: example of using the provider directly, without `summon`
 - README: added Limitations section
 
+## [0.1.3]
+### Added
+- allow for the retrival of secrets regardless of Safety Deposit Box
+
+## [0.1.2]
 ### Modified
 - README: fixed provider name in first paragraph of Usage
 

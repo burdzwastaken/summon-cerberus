@@ -244,7 +244,7 @@ func main() {
 
 	providerVarSlice := strings.Split(providerVar, "/")
 
-	product, environment, secret := providerVarSlice[0], providerVarSlice[1], providerVarSlice[2]
+	path, product, environment, secret := providerVarSlice[0], providerVarSlice[1], providerVarSlice[2], providerVarSlice[3]
 	if len(secret) > 0 {
 		secret = "." + secret
 	}
@@ -257,7 +257,7 @@ func main() {
 
 	clientToken := authCerberus(url)
 
-	url2 := os.Getenv("CERBERUS_API") + fmt.Sprintf("/v1/secret/app/%s/%s", product, environment)
+	url2 := os.Getenv("CERBERUS_API") + fmt.Sprintf("/v1/secret/%s/%s/%s", path, product, environment)
 	debug(fmt.Sprintf("URL:> %s", url2))
 
 	// Build the request
