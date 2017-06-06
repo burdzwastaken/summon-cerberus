@@ -5,8 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a ch
 
 ## [Unreleased]
 ### Added
-- README: example of using the provider directly, without `summon`
-- README: added Limitations section
+
+## [0.1.4]
+### Added
+- set `X-Cerberus-Client` header in request to cerberus
 
 ## [0.1.3]
 ### Added
@@ -15,6 +17,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a ch
 ## [0.1.2]
 ### Modified
 - README: fixed provider name in first paragraph of Usage
+- README: example of using the provider directly, without `summon`
+- README: added Limitations section
 
 ### Removed
 - removed unused Dockerfile
