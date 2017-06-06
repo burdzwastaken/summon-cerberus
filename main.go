@@ -163,7 +163,7 @@ func debug(msg string) {
 	}
 }
 
-func authCerberus(url string) string {
+func authCerberus(url string, clientVersion string) string {
 
 	accountID := getAccountID()
 	role := getIAMRole()
@@ -177,6 +177,7 @@ func authCerberus(url string) string {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	// req.Header.Set("X-Custom-Header", "myvalue")
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-Cerberus-Client", clientVersion)
 	// Send the request via a client
 	// Do sends an HTTP request and
 	// returns an HTTP response
@@ -255,7 +256,11 @@ func main() {
 
 	url := os.Getenv("CERBERUS_API") + "/v1/auth/iam-role"
 
-	clientToken := authCerberus(url)
+	// Client Version HTTP Header
+	// https://github.com/lookout/summon-cerberus/issues/5
+	clientVersion := "SummonCerberusClient/0.1.4"
+
+	clientToken := authCerberus(url, clientVersion)
 
 	url2 := os.Getenv("CERBERUS_API") + fmt.Sprintf("/v1/secret/%s/%s/%s", path, product, environment)
 	debug(fmt.Sprintf("URL:> %s", url2))
@@ -265,6 +270,7 @@ func main() {
 	req, err := http.NewRequest("GET", url2, nil)
 	req.Header.Set("X-Vault-Token", clientToken)
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-Cerberus-Client", clientVersion)
 
 	// Send the request via a client
 	// Do sends an HTTP request and
