@@ -1,12 +1,12 @@
 # summon-cerberus
 
-Cerberus provider for [Summon](https://conjurinc.github.io/summon).
+Cerberus provider for [Summon](https://cyberark.github.io/summon).
 
 Provides access to secrets stored in [Cerberus](http://engineering.nike.com/cerberus/).
 
 ## Usage
 
-[Set summon-cerberus as your Summon provider](https://github.com/conjurinc/summon#flags).
+[Set summon-cerberus as your Summon provider](https://github.com/cyberark/summon#flags).
 
 Make sure to set `CERBERUS_API` via environment variable.  
 Give summon a path to an object in Cerberus regardless of Safety Deposit Box path (`/app/` or `/shared/`) and it will fetch it for you and
@@ -54,7 +54,7 @@ $ echo $DATADOG_API_KEY
 summon-cerberus uses the [official AWS Go SDK](https://github.com/aws/aws-sdk-go).
 It will use the credentials file or environment variables [as they explain](https://github.com/aws/aws-sdk-go#configuring-credentials).
 
-Additionally, see [Summon Usage](https://github.com/conjurinc/summon#usage) documentation.
+Additionally, see [Summon Usage](https://github.com/cyberark/summon#usage) documentation.
 
 ## Limitations
 
