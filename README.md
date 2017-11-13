@@ -9,16 +9,16 @@ Provides access to secrets stored in [Cerberus](http://engineering.nike.com/cerb
 [Set summon-cerberus as your Summon provider](https://github.com/conjurinc/summon#flags).
 
 Make sure to set `CERBERUS_API` via environment variable.  
-Give summon a path to an object in Cerberus and it will fetch it for you and
+Give summon a path to an object in Cerberus regardless of Safety Deposit Box path (`/app/` or `/shared/`) and it will fetch it for you and
 print the value to stdout.
 
 ### Example 1
 ```bash
-$ export CERBERUS_API='https://mycerbersus_endpoint.com'
+$ export CERBERUS_API='https://mycerberus_endpoint.com'
 $ cat > /tmp/my_secrets.yml <<-EOF
 	DB_USER: product_name
-	DB_PASSWORD: !var product/$ENVTAG/dbpassword
-	DATADOG_API_TOKEN: !var datadog/$ENVTAG/datadog_api_token
+	DB_PASSWORD: !var app/product/$ENVTAG/dbpassword
+	DATADOG_API_TOKEN: !var shared/datadog/$ENVTAG/datadog_api_token
 EOF
 $ summon --provider summon-cerberus \
          -f /tmp/my_secrets.yml \
@@ -32,10 +32,10 @@ DATADOG_API_TOKEN=6d4f1e2992a11a332550aa555e630f0dc
 
 ### Example 2
 ```bash
-$ export CERBERUS_API='https://mycerbersus_endpoint.com'
+$ export CERBERUS_API='https://mycerberus_endpoint.com'
 $ summon --provider summon-cerberus \
          -D ENVTAG=myenv
-         --yaml 'DATADOG_API_TOKEN: !var product/$ENVTAG/datadog_api_token' \
+         --yaml 'DATADOG_API_TOKEN: !var app/product/$ENVTAG/datadog_api_token' \
          printenv | grep DATADOG_API_TOKEN
 
 DATADOG_API_TOKEN=6d4f1e2992a11a332550aa555e630f0dc
@@ -43,8 +43,8 @@ DATADOG_API_TOKEN=6d4f1e2992a11a332550aa555e630f0dc
 
 ### Example 3
 ```bash
-$ export CERBERUS_API='https://mycerbersus_endpoint.com'
-$ DATADOG_API_KEY=$(summon-cerberus product/myenv/datadog_api_token)
+$ export CERBERUS_API='https://mycerberus_endpoint.com'
+$ DATADOG_API_KEY=$(summon-cerberus shared/product/myenv/datadog_api_token)
 $ echo $DATADOG_API_KEY
 6d4f1e2992a11a332550aa555e630f0dc
 ```
